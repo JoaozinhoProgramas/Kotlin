@@ -1,0 +1,15 @@
+class Product {
+    Pid : Int = 0
+    PName : String = ""
+    PQuant : Int = 0
+    PPrice : Double = 0.0
+    
+    fun Show {
+        println("=============")
+        println("ID: ${Pid}")
+        println("NOME: ${PName}")
+        println("PREÇO: ${PPrice}" )
+        println("QUANTIDADE: ${PQuant}")
+        println("=============")
+    }
+}
