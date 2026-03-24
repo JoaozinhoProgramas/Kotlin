@@ -69,15 +69,26 @@ fun main() {
                     println("Deseja alterar algum produto? S/N")
                     var Change : String = readln().uppercase()
                     
-                    if (Change == "N") {
+                    if (Change == "S") {
+                    
+                        println("Digite o ID do produto que será alterado:")
+                        var Pchange : Int = readln().toInt()
+                        
+                        println("Digite o novo valor do produto: ")
+                        var PriceChange : Double = readln().toDouble()
+                        
+                        
+                        PriceList[Pchange] = PriceChange
+                        
+                        println("Alterando valor, aguarde um momento ...")
+                        Thread.sleep(1500)
+                        println("Alteração concluida com sucesso")
+                        
+                        
+                    }else if (Change == "N") {
                         println("Encerrando janela do estoque ...")
                         break
-                    }else if (Change == "S") {
-                        println("Qual produto será alterado?")
-                        for(y in 0 until NameList.size) {
-                            println("Produto ${NameList[i]}")
-                            i += 1
-                        }
+                        
                     } else {
                         println("Comando inválido, tente novamente")
                     }
