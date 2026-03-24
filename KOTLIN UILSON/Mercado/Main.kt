@@ -8,10 +8,10 @@ fun main() {
     var Pid : Int = 0
     
     do{
-        println("Mercado")
-        println("1 - Comprar")
-        println("2 - Vender")
-        println("3 - Mostrar estoque")
+        println("={Lista de Mercado}=")
+        println("1 - Adicionar")
+        println("2 - Remover")
+        println("3 - Mostrar Lista")
         println("4 - Encerrar aplicação")
         
         val Choice : Int = readln().toInt()
@@ -19,7 +19,7 @@ fun main() {
         while(Choice != 4){
             when(Choice){
                 1 -> {
-                    println("={COMPRAS}=")
+                    println("={ADICIONAR}=")
                         
                     println("Digite o nome do produto: (Digite S para sair)")
                     var PName : String = readln()
@@ -50,7 +50,53 @@ fun main() {
                     
                     Pid += 1
                 } 
-                2 -> println("Vendeu")
+                2 -> {
+                    println("={REMOVER}=")
+                    var i : Int = 0
+                    
+                    for(y in 0 until NameList.size) {
+                    
+                        println("=============")
+                        println("ID: ${IDList[i]}")
+                        println("NOME: ${NameList[i]}")
+                        println("PREÇO:R$ ${PriceList[i]}" )
+                        println("QUANTIDADE: ${QuantList[i]} unid")
+                        println("=============")
+                        
+                        i += 1
+                    }
+                    
+                    println("Digite o ID do produto que irá remover: ")
+                    var RemoveChoice : Int = readln().toInt()
+                    
+                    println("Digite a quantidade que irá remover: ")
+                    var RemoveQuant : Int = readln().toInt()
+                    
+                    if (RemoveQuant < QuantList[RemoveChoice]) {
+                        QuantList[RemoveChoice] -= RemoveQuant 
+                        
+                        println("Removendo, agurade um instante ...")
+                        Thread.sleep(1500)
+                        println("Remoção concluida")
+                        break
+                        
+                    } else if (RemoveQuant == QuantList[RemoveChoice]) {
+                        IDList[RemoveChoice] = 9999
+                        NameList[RemoveChoice] = "Produto Removido"
+                        QuantList[RemoveChoice] -= RemoveQuant
+                        PriceList[RemoveChoice] = 0.0
+                        
+                        
+                        println("Removendo, aguarde um instante ...")
+                        Thread.sleep(1500)
+                        println("Remoção concluida")
+                        break
+                        
+                    } 
+                    else {
+                        println("Quantidade inválida, tente novamente")
+                    }
+                }
                 3 -> {
                     println("={ESTOQUE}=")
                     var i : Int = 0
@@ -87,18 +133,14 @@ fun main() {
                         
                     }else if (Change == "N") {
                         println("Encerrando janela do estoque ...")
+                        Thread.sleep(1500)
                         break
                         
                     } else {
                         println("Comando inválido, tente novamente")
                     }
-                        
-                    
                 }
-                4 -> {
-                    println("Encerrando aplicação...")
-                }
-                    
+            
                 else -> {
                     println("Comando inválido, tente novamente")
                     break
