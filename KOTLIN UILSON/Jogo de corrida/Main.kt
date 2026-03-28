@@ -12,7 +12,7 @@ fun main() {
         when(Choice) {
             1 -> {
                 println(ObjPilot.CreatePilot())
-                println(ObjCar)//sem chamar a função, não printa nada, mas chamando a função. vai printar a lista inteira
+                println(ObjCar.CarSpawn())
                 println(ObjPilot.CreateAdversary())        
             }
         
@@ -22,9 +22,9 @@ fun main() {
         }    
     }while(Choice != 2)
     
-    var ShowCars = Car().CarSpawn()
+    /*var ShowCars = Car().CarSpawn()
     var ShowAdversary = Pilot().CreateAdversary()
-    /*println(ShowCars)
+    println(ShowCars)
     println(ShowAdversary)*/
 }
 
@@ -53,9 +53,9 @@ class Pilot {
         }    
     }
     
-    fun CreateAdversary(): ArrayDeque <String> {
+    fun CreateAdversary(): ArrayDeque <Any> {
 
-        var AdversaryList : ArrayDeque <String> = ArrayDeque()
+        var AdversaryList : ArrayDeque <Any> = ArrayDeque()
         var Index : Int = 0
         var AdversaryNames = mutableListOf(
             "Ana Banana","Bruno Mazeu","Carimbo","xX_Destroyer_Xx",
@@ -63,15 +63,18 @@ class Pilot {
             "Henrique rei delas","Jiroscopio","KeroTudoh",
             "Livia Olivia","Mão invisel do estado")
         
-        println("Digite a quantidade de corredores:")
+        println("Digite a quantidade de corredores: (Quantidade Maxima ${AdversaryNames.size}")
         var AdversaryQuant = readln().toInt()
         
         for(i in 1..AdversaryQuant) {
             var AdversaryName = AdversaryNames.random()
+            var AdversaryAbility : Int = (1..10).random()
+            
             AdversaryNames.remove(AdversaryName)
             Index += 1 
             
-            AdversaryList.addLast(AdversaryName)
+            var AdversaryMap = mapOf(AdversaryName to AdversaryAbility)
+            AdversaryList.addLast(AdversaryMap)
         }
         return AdversaryList
     }
@@ -94,11 +97,26 @@ class Car {
             var ActualSpeed = Velocity * Acceleration / Airresist
             CarNumber += 1
             
-            val CarMap = mapOf(ActualSpeed to CarNumber)
+            val CarMap = mapOf(CarNumber to ActualSpeed)
             
-            CarsList.addLast(CarMap)
-
+            if(CarMap[CarNumber] >= CarMap.entries.first()) {
+                CarsList.addFirst(CarMap)
+            } else {
+                CarsList.addLast(CarMap)    
+            }
         }
+        
         return CarsList
     }
 }
+
+/*class Circuit {
+    
+    fun CreateCircuit() {
+        val ObjCar = Car()
+        val ObjPilot = Pilot() 
+        
+        var
+        
+    }
+}*/
