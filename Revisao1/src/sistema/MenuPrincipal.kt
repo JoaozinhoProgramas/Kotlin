@@ -1,13 +1,13 @@
 package sistema
 
 import produto.CaixaDaAgua
-import repositorio.JPA
 import sistema.Caixa_De_Agua.CadastrarCaixa
 import sistema.Caixa_De_Agua.listarCaixa
 
 
 
 fun menuInicial() {
+    val listaDeTeste = mutableListOf<CaixaDaAgua>()
         do {
             println("1 sair")
             println("2 cadastrar")
@@ -21,10 +21,10 @@ fun menuInicial() {
                 }
 
                 2 -> {
-                    CadastrarCaixa()
+                    CadastrarCaixa(listaDeTeste)
                 }
 
-                3 -> listarCaixa()
+                3 -> listarCaixa(listaDeTeste)
                 4 -> println("4 listar")
                 5 -> println("5 excluir")
             }
