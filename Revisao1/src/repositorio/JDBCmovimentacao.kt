@@ -1,9 +1,10 @@
 package repositorio
 
 import java.sql.SQLException
+import java.time.LocalDateTime
 
 
-fun JDBCmovimentacao() {
+fun JDBCmovimentacao(contexto: String, valor: String, data: LocalDateTime) {
     val JDBC = JDBC()
     val c = JDBC.c
 
@@ -11,19 +12,15 @@ fun JDBCmovimentacao() {
         JDBC.conectar()
         val sql = """
             INSERT INTO tabelaMuitoFoda 
-            (marca, modelo, dimensao, cor, material, formato, preco) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """.trimIndent()
+            (contexto, valor, data) 
+            VALUES (?,?,?) 
+            """.trimIndent()
 
         val stmt = c!!.prepareStatement(sql)
 
-        stmt.setString(1, caixaDaAgua.marca)
-        stmt.setString(2, caixaDaAgua.modelo)
-        stmt.setArray(3, c!!.createArrayOf("float8", caixaDaAgua.dimensao.toTypedArray()))
-        stmt.setString(4, caixaDaAgua.cor.name)
-        stmt.setString(5, caixaDaAgua.material.name)
-        stmt.setString(6, caixaDaAgua.formato)
-        stmt.setString(7, caixaDaAgua.preco.toString())
+        stmt.setString(1, valor.toString())
+        stmt.setString(2, data.toString())
+        stmt.setString(3, contexto)
 
         stmt.executeUpdate()
         stmt.close()
