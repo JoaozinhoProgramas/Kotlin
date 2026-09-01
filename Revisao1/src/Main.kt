@@ -1,7 +1,9 @@
 import produto.CaixaDaAgua
 import sistema.Caixa_De_Agua.CadastrarCaixa
-import sistema.menuInicial
+import sistema.menuCaixaDeAgua
+import sistema.menuCaixaDeAgua
 
 fun main(){
-    menuInicial()
+    println("MENU INCIAL")
+    menuCaixaDeAgua()
 }

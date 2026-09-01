@@ -33,7 +33,7 @@ class JDBC(
         try {
             conectar()
             val sql = """
-            INSERT INTO tabelaMuitoFoda 
+            INSERT INTO caixa_da_agua 
             (marca, modelo, dimensao, cor, material, formato, preco) 
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """.trimIndent()
