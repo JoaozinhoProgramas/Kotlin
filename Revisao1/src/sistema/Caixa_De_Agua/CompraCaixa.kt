@@ -30,8 +30,10 @@ fun CompraCaixa() {
     val finalValue = preco.multiply(BigDecimal(choiceQTYbuy))
 
     if (finalValue.compareTo(saldo) < 0) {
-        println("Transação aprovada. Total: $finalValue | Saldo: $saldo")
+        println("Transação aprovada")
+        println("Saldo Atual: ${jdbc.atualizarSaldo(finalValue * (-1).toBigDecimal())}")
     } else {
         println("Transação não aprovada, saldo insuficiente. Total: $finalValue | Saldo: $saldo")
     }
+
 }

@@ -6,6 +6,7 @@ import java.sql.DriverManager
 import java.sql.SQLException
 import java.math.BigDecimal
 
+
 //porta: 5432
 //usuario: postgres
 //senha: postgres
@@ -36,7 +37,8 @@ class JDBC(
             val sql = """
             INSERT INTO caixa_da_agua 
             (marca, modelo, dimensao, cor, material, formato, preco) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
+            
         """.trimIndent()
 
             val stmt = c!!.prepareStatement(sql)
@@ -169,12 +171,12 @@ class JDBC(
         try {
             conectar()
 
-            val sql = "SELECT Valor_Saldo FROM SALDO LIMIT 1"
+            val sql = "SELECT valor_saldo FROM SALDO LIMIT 1"
             val stmt = c!!.prepareStatement(sql)
 
             val rs = stmt.executeQuery()
             if (rs.next()) {
-                saldo = rs.getBigDecimal("saldo")
+                saldo = rs.getBigDecimal("valor_saldo")
             }
 
             rs.close()
@@ -187,5 +189,25 @@ class JDBC(
         }
         return saldo
     }
-}
 
+    fun atualizarSaldo(valor: BigDecimal): BigDecimal? {
+        try {
+            conectar()
+            val sql = "UPDATE saldo SET valor_saldo = valor_saldo + ? WHERE id = 1 RETURNING valor_saldo"
+            val smt = c!!.prepareStatement(sql)
+            smt.setBigDecimal(1, valor)
+            val rs = smt.executeQuery()
+            rs.next()
+            val saldo = rs.getBigDecimal("valor_saldo")
+            smt.close()
+            return saldo
+
+        } catch (e: SQLException) {
+            println(e.printStackTrace())
+        } finally {
+            c?.close()
+        }
+
+        return null
+    }
+}
