@@ -4,6 +4,7 @@ import produto.CaixaDaAgua
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.math.BigDecimal
 
 //porta: 5432
 //usuario: postgres
@@ -46,7 +47,7 @@ class JDBC(
             stmt.setString(4, caixaDaAgua.cor.name)
             stmt.setString(5, caixaDaAgua.material.name)
             stmt.setString(6, caixaDaAgua.formato)
-            stmt.setString(7, caixaDaAgua.preco.toString())
+            stmt.setBigDecimal(7, caixaDaAgua.preco)
 
             stmt.executeUpdate()
             stmt.close()
@@ -101,7 +102,7 @@ class JDBC(
 
             val doublePrecision = c!!.createArrayOf("float8", caixa.dimensao.toTypedArray())
 
-            stmt.setString(1, caixa.preco.toString())
+            stmt.setBigDecimal(1, caixa.preco)
             stmt.setString(2, caixa.marca)
             stmt.setString(3, caixa.modelo)
             stmt.setString(4, caixa.formato)
@@ -135,6 +136,56 @@ class JDBC(
         } catch (e: SQLException) {
             println(e.printStackTrace())
         }
+    }
+
+    fun buscarPreco(id: Int): BigDecimal? {
+        var preco: BigDecimal? = null
+        try {
+            conectar()
+
+            val sql = "SELECT preco FROM caixa_da_agua WHERE id = ?"
+            val stmt = c!!.prepareStatement(sql)
+            stmt.setInt(1, id)
+
+            val rs = stmt.executeQuery()
+
+            if (rs.next()) {
+                preco = rs.getBigDecimal("preco")
+            }
+
+            rs.close()
+            stmt.close()
+
+        } catch (e: SQLException) {
+            println(e.printStackTrace())
+        } finally {
+            c?.close()
+        }
+        return preco
+    }
+
+    fun buscarSaldo(): BigDecimal? {
+        var saldo: BigDecimal? = null
+        try {
+            conectar()
+
+            val sql = "SELECT Valor_Saldo FROM SALDO LIMIT 1"
+            val stmt = c!!.prepareStatement(sql)
+
+            val rs = stmt.executeQuery()
+            if (rs.next()) {
+                saldo = rs.getBigDecimal("saldo")
+            }
+
+            rs.close()
+            stmt.close()
+
+        } catch (e: SQLException) {
+            println(e.printStackTrace())
+        } finally {
+            c?.close()
+        }
+        return saldo
     }
 }
 
